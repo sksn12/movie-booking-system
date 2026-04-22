@@ -1,5 +1,9 @@
 package exception;
 
-public class DuplicateDataException {
+public class DuplicateDataException extends RuntimeException {
+
+    public DuplicateDataException(String message) {
+        super(message);
+    }
 
 }
