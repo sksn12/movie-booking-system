@@ -10,11 +10,6 @@ public class MovieService {
 
     public MovieService() {
         this.movieDAO = new MovieDAO();
-        readAllMovies();
-    }
-
-    private void readAllMovies() {
-        movieDAO.readAllMovies();
     }
 
     public List<MovieDTO> getMoviesByDate(String date) {

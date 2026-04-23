@@ -11,11 +11,6 @@ public class MemberService {
     public MemberService() {
         memberDAO = new MemberDAO();
         sessionManager = SessionManager.getInstance();
-        readMemberData();
-    }
-
-    private void readMemberData() {
-        memberDAO.readMemberData();
     }
 
     public void login(String memberId, String password) {

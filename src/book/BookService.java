@@ -26,10 +26,6 @@ public class BookService {
         sessionManager = SessionManager.getInstance();
     }
 
-    public void readBookData() {
-        bookDAO.readBookData();
-    }
-
     public List<BookDTO> findByMemberId(String memberId) {
         return bookDAO.findAll()
                 .stream()

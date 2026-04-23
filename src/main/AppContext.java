@@ -16,10 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import book.BookDAO;
 import book.BookService;
 import common.DataRepository;
 import common.SessionManager;
+import member.MemberDAO;
 import member.MemberService;
+import movie.MovieDAO;
 import movie.MovieDTO;
 import movie.MovieService;
 import movie.PriceType;
@@ -48,11 +51,16 @@ public class AppContext {
     static JPanel root;
 
     static void init() {
+        new MemberDAO().readMemberData();
+        new MovieDAO().readAllMovies();
+        new BookDAO().readBookData();
+
         memberService = new MemberService();
         movieService = new MovieService();
         bookService = new BookService();
-        bookService.readBookData();
+        
         dataRepo = DataRepository.getInstance();
+        sessionManager = SessionManager.getInstance();
     }
 
     static void go(String key) {
