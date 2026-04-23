@@ -26,6 +26,7 @@ import javax.swing.JToggleButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import exception.PastMovieBookingException;
 import movie.MovieDTO;
 import movie.PriceType;
 
@@ -98,22 +99,25 @@ public class MovieListPanel extends JPanel {
             bottom.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
             JButton reserveBtn = AppContext.btn("선택한 영화 예약 →", AppContext.ACCENT);
             reserveBtn.addActionListener(e -> {
-                int row = table.getSelectedRow();
-                if (row < 0) {
-                    JOptionPane.showMessageDialog(AppContext.frame, "예약할 영화를 선택하세요.", "안내",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                String movieId = (String) model.getValueAt(row, 0);
-                List<MovieDTO> list = cache.getOrDefault(selectedDate[0], Collections.emptyList());
-                list.stream().filter(m -> m.getMovieId().equals(movieId)).findFirst().ifPresent(m -> {
-                    if (AppContext.isPast(m)) {
-                        JOptionPane.showMessageDialog(AppContext.frame, "지난 상영은 예약할 수 없습니다.", "안내",
-                                JOptionPane.WARNING_MESSAGE);
+                try {
+                    int row = table.getSelectedRow();
+                    if (row < 0) {
+                        JOptionPane.showMessageDialog(AppContext.frame, "예약할 영화를 선택하세요.", "안내",
+                                JOptionPane.INFORMATION_MESSAGE);
                         return;
                     }
-                    Main.seatSelect(m, selectedDate[0]);
-                });
+                    String movieId = (String) model.getValueAt(row, 0);
+                    List<MovieDTO> list = cache.getOrDefault(selectedDate[0], Collections.emptyList());
+                    list.stream()
+                            .filter(m -> m.getMovieId().equals(movieId))
+                            .findFirst()
+                            .ifPresent(m -> {
+                                Main.seatSelect(m, selectedDate[0]);
+                            });
+                } catch (PastMovieBookingException ex) {
+                    JOptionPane.showMessageDialog(AppContext.frame, ex.getMessage(), "안내",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             });
             bottom.add(reserveBtn);
             add(bottom, BorderLayout.SOUTH);
