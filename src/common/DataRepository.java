@@ -1,9 +1,10 @@
 package common;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import book.BookDTO;
 import lombok.Data;
@@ -20,9 +21,9 @@ public class DataRepository {
     private Map<String, List<MovieDTO>> movieMap;
 
     private DataRepository() {
-        movieMap = new HashMap<>();
-        memberList = new ArrayList<>();
-        bookList = new ArrayList<>();
+        movieMap = new ConcurrentHashMap<>();
+        memberList = Collections.synchronizedList(new ArrayList<>());
+        bookList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public static DataRepository getInstance() {
