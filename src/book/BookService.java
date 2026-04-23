@@ -11,6 +11,8 @@ import common.FilePath;
 import common.SessionManager;
 import exception.BookCancelException;
 import exception.MovieNotSelectableException;
+import exception.PastMovieBookingException;
+import exception.SeatAlreadyBookedException;
 import movie.MovieDTO;
 import movie.PriceType;
 
@@ -48,12 +50,16 @@ public class BookService {
             throw new MovieNotSelectableException("없는 영화입니다.");
         }
 
+        if (movie.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new PastMovieBookingException("지난 상영은 예약할 수 없습니다.");
+        }
+
         for (String seat : seatList) {
             int row = seat.charAt(0) - 'A';
             int col = Integer.parseInt(seat.substring(1)) - 1;
 
             if (seatArray[row][col].equals("x")) {
-                return "";
+                throw new SeatAlreadyBookedException("선택한 좌석 중 이미 예약된 좌석이 있습니다. : " + seat);
             }
 
             seatArray[row][col] = "x";

@@ -28,6 +28,8 @@ import javax.swing.SwingConstants;
 import common.FilePath;
 import common.FileUtil;
 import exception.MovieNotSelectableException;
+import exception.PastMovieBookingException;
+import exception.SeatAlreadyBookedException;
 import movie.MovieDTO;
 import movie.PriceType;
 
@@ -254,15 +256,15 @@ public class SeatSelectionPanel extends JPanel {
             return;
         try {
             String bookId = AppContext.bookService.book(movie.getMovieId(), date, sorted, pt);
-            if (bookId == null || bookId.isEmpty()) {
-                JOptionPane.showMessageDialog(AppContext.frame,
-                        "선택한 좌석 중 이미 예약된 좌석이 있습니다.", "예약 실패", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+
             JOptionPane.showMessageDialog(AppContext.frame,
                     "예매가 완료되었습니다!\n예매 번호: " + bookId, "예매 완료", JOptionPane.INFORMATION_MESSAGE);
             Main.menu();
         } catch (MovieNotSelectableException ex) {
+            errLbl.setText(ex.getMessage());
+        } catch (SeatAlreadyBookedException ex) {
+            errLbl.setText(ex.getMessage());
+        } catch (PastMovieBookingException ex) {
             errLbl.setText(ex.getMessage());
         } catch (Exception ex) {
             errLbl.setText("예약 중 오류: " + ex.getMessage());
