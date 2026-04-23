@@ -27,4 +27,8 @@ public class MovieDAO {
                                     LocalDateTime.parse(parts[5]), LocalDateTime.parse(parts[6]));
                         }).collect(Collectors.toList()))));
     }
+
+    public List<MovieDTO> findMoviesByDate(String date) {
+        return dataRepository.getMovieMap().get(date);
+    }
 }
