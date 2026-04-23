@@ -2,7 +2,6 @@ package book;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,14 +42,6 @@ public class BookDAO {
 
     public List<BookDTO> findAll() {
         return dataRepository.getBookList();
-    }
-
-    public List<BookDTO> findByMemberId(String memberId) {
-        return dataRepository.getBookList()
-                .stream()
-                .filter(book -> book.getMemberId().equals(memberId))
-                .sorted(Comparator.comparing(BookDTO::getScreeningTime).reversed())
-                .collect(Collectors.toList());
     }
 
     public List<String> findSeatsByMovieAndDate(String movieId, String date) {
