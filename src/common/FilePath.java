@@ -7,6 +7,6 @@ public class FilePath {
 	public static final String MOVIE_DIR_PATH = "src/resource/movieDir/";
 	public static final String MOVIE_FILE_PREFIX = "movie_";
 	public static final String MOVIE_FILE_EXTENSION = ".txt";
-	public static final String FILE_DELIMITER = "|";
+	public static final String FILE_DELIMITER = ",";
 
 }

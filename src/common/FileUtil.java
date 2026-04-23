@@ -18,9 +18,6 @@ public class FileUtil {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
-				if (line.isEmpty() || line.startsWith("#")) {
-					continue;
-				}
 				lines.add(line);
 			}
 

@@ -1,5 +1,17 @@
 {
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ]
+        "src/lib/**/*.jar"
+    ],
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home",
+            "default": true
+        }
+    ],
+    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
 }

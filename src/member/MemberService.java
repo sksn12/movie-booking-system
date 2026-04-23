@@ -14,6 +14,7 @@ public class MemberService {
 		MemberDTO member = memberDAO.findMemberById(memberId);
 		if (member != null && member.getPassword().equals(password)) {
 			dataRepository.setLoginMember(member);
+			System.out.println("정상적으로 로그인이 되었습니다.");
 		} else {
 			throw new LoginFailedException("아이디 또는 비밀번호가 일치하지 않습니다.");
 		}
