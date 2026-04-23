@@ -80,7 +80,7 @@ public class FileUtil {
 		}
 		for (File file : files) {
 			if (file.isFile()) {
-				String date = file.getName().replace(FilePath.MOVIE_FILE_PREFIX, "").replace(".txt", "");
+				String date = file.getName().replace(FilePath.MOVIE_FILE_PREFIX, "").replace(FilePath.MOVIE_FILE_EXTENSION, "");
 				movieMap.put(date, readLines(file.getAbsolutePath()));
 			}
 		}
