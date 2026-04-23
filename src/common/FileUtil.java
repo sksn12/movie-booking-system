@@ -2,7 +2,9 @@ package common;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileUtil {
 
@@ -64,5 +66,24 @@ public class FileUtil {
 		} catch (IOException e) {
 			throw new RuntimeException("[FileUtil] 파일 append 오류: " + filePath, e);
 		}
+	}
+
+	public static Map<String, List<String>> readLinesFromDirectory(String directoryPath) {
+		Map<String, List<String>> movieMap = new HashMap<>();
+		File directory = new File(directoryPath);
+		if (!directory.exists() || !directory.isDirectory()) {
+			return movieMap;
+		}
+		File[] files = directory.listFiles();
+		if (files == null) {
+			return movieMap;
+		}
+		for (File file : files) {
+			if (file.isFile()) {
+				String date = file.getName().replace(FilePath.MOVIE_FILE_PREFIX, "").replace(".txt", "");
+				movieMap.put(date, readLines(file.getAbsolutePath()));
+			}
+		}
+		return movieMap;
 	}
 }

@@ -26,7 +26,7 @@ from datetime import date, datetime, timedelta
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))   # src/common
 SRC_DIR      = os.path.dirname(SCRIPT_DIR)                  # src
 MOVIE_DIR    = os.path.join(SRC_DIR, "resource", "movieDir")
-DELIMITER    = "|"
+DELIMITER    = ","
 DAYS_BEFORE  = 7   # 오늘 기준 -7일
 DAYS_AFTER   = 10  # 오늘 기준 +10일
 
@@ -124,8 +124,6 @@ def write_file(target_date: date, rows: list[str]) -> None:
     filepath = os.path.join(MOVIE_DIR, filename)
 
     with open(filepath, "w", encoding="utf-8") as f:
-        # 헤더 (Java에서 읽을 때 '#' 시작 줄은 무시하도록 처리 권장)
-        f.write("# movieId|title|genre|runningTime|theaterNo|startTime|endTime\n")
         for row in rows:
             f.write(row + "\n")
 

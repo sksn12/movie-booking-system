@@ -5,6 +5,8 @@ import lombok.Data;
 import member.MemberDTO;
 import movie.MovieDTO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,9 @@ public class DataRepository {
 	private MemberDTO loginMember;
 
 	private DataRepository() {
+		movieMap = new HashMap<>();
+		memberList = new ArrayList<>();
+		bookList = new ArrayList<>();
 	}
 
 	public static DataRepository getInstance() {

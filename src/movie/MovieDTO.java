@@ -2,6 +2,12 @@ package movie;
 
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
+
+@ToString
+@AllArgsConstructor
 public class MovieDTO {
 
     private String movieId;
@@ -11,7 +17,5 @@ public class MovieDTO {
     private int theaterNo;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private int totalSeatCount;
-    private int price;
 
 }
