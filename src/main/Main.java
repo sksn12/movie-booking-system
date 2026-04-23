@@ -1,74 +1,53 @@
 package main;
 
-import java.util.Scanner;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 
-import exception.LoginFailedException;
-import member.MemberService;
-import movie.MovieService;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import movie.MovieDTO;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        AppContext.init();
+        SwingUtilities.invokeLater(() -> {
+            AppContext.frame = new JFrame("영화 예매 시스템");
+            AppContext.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            AppContext.frame.setSize(960, 660);
+            AppContext.frame.setLocationRelativeTo(null);
+            AppContext.frame.setMinimumSize(new Dimension(820, 580));
 
-        MemberService memberService = new MemberService();
-        MovieService movieService = new MovieService();
+            AppContext.cl = new CardLayout();
+            AppContext.root = new JPanel(AppContext.cl);
+            AppContext.root.setBackground(AppContext.BG);
 
-        while (true) {
-            try {
-                System.out.print("아이디를 입력해주세요 : ");
-                String memberId = sc.nextLine();
+            AppContext.frame.setContentPane(AppContext.root);
+            AppContext.frame.setVisible(true);
 
-                System.out.print("비밀번호를 입력해주세요 : ");
-                String password = sc.nextLine();
-
-                memberService.login(memberId, password);
-            } catch (LoginFailedException loginFailedException) {
-                System.out.println(loginFailedException.getMessage());
-                continue;
-            }
-
-            break;
-        }
-
-        int condition;
-
-        do {
-            printInitMenu();
-            System.out.print("원하는 기능의 번호를 입력해주세요 : ");
-            condition = Integer.parseInt(sc.nextLine());
-
-            switch (condition) {
-                case 1:
-                    showMovieList();
-                    break;
-                case 2:
-                    showBookList();
-                    break;
-                case 3:
-                    break;
-
-                default:
-                    System.out.println("잘못된 번호입니다.");
-                    break;
-            }
-
-        } while (condition != 3);
+            login();
+        });
     }
 
-    public static void printInitMenu() {
-        System.out.println("=======================");
-        System.out.println("1. 상영중인 영화 조회 / 예약");
-        System.out.println("2. 예매 내역 조회");
-        System.out.println("3. 나가기");
-        System.out.println("=======================");
+    static void login() {
+        AppContext.push("LOGIN", new LoginPanel());
     }
 
-    public static void showMovieList() {
-
+    static void menu() {
+        AppContext.push("MENU", new MainMenuPanel());
     }
 
-    public static void showBookList() {
+    static void movieList(boolean bookMode) {
+        AppContext.push("MOVIES", new MovieListPanel(bookMode));
+    }
 
+    static void seatSelect(MovieDTO movie, String date) {
+        AppContext.push("SEAT", new SeatSelectionPanel(movie, date));
+    }
+
+    static void myBookings() {
+        AppContext.push("BOOKS", new MyBookingsPanel());
     }
 }

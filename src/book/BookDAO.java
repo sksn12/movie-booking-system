@@ -101,7 +101,7 @@ public class BookDAO {
                 .movieTitle(movie.getTitle())
                 .theaterNo(movie.getTheaterNo())
                 .seatList(seatList)
-                .screeningTime(LocalDateTime.now())
+                .screeningTime(movie.getStartTime())
                 .bookedAt(LocalDateTime.now())
                 .totalPrice(totalPrice)
                 .isCanceled(false)
@@ -117,6 +117,15 @@ public class BookDAO {
     }
 
     public synchronized void cancelBook(String bookId) {
+        dataRepository.setBookList(dataRepository.getBookList()
+                .stream()
+                .map(b -> {
+                    if (b.getBookId().equals(bookId)) {
+                        b.setCanceled(true);
+                    }
+                    return b;
+                }).collect(Collectors.toList()));
+
         BookDTO book = dataRepository.getBookList()
                 .stream()
                 .filter(b -> b.getBookId().equals(bookId))
@@ -148,5 +157,13 @@ public class BookDAO {
 
         FileUtil.writeLines(FilePath.SEAT_DIR_PATH + date + "/" + movieId + ".txt",
                 updatedSeats);
+
+        List<String> newBookList = dataRepository.getBookList()
+                .stream()
+                .map(b -> b.toString())
+                .collect(Collectors.toList());
+
+        FileUtil.writeLines(FilePath.BOOK_FILE_PATH, newBookList);
+
     }
 }
