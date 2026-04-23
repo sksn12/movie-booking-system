@@ -146,7 +146,7 @@ public class MovieListPanel extends JPanel {
         try {
             String dp = movieId.split("_")[0];
             LocalDate d = LocalDate.parse(dp, DateTimeFormatter.ofPattern("yyyyMMdd"));
-            List<MovieDTO> list = AppContext.repo.getMovieMap()
+            List<MovieDTO> list = AppContext.dataRepo.getMovieMap()
                     .get(d.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             if (list != null) {
                 return list.stream().filter(m -> m.getMovieId().equals(movieId))

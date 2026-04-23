@@ -23,7 +23,7 @@ public class MainMenuPanel extends JPanel {
         card.setBorder(BorderFactory.createEmptyBorder(50, 64, 50, 64));
         card.setPreferredSize(new Dimension(430, 400));
 
-        String id = AppContext.repo.getLoginMember().getMemberId();
+        String id = AppContext.sessionManager.getLoginMember().getMemberId();
         JLabel welcome = AppContext.lbl("안녕하세요, " + id + "님!", 18, true);
         welcome.setAlignmentX(CENTER_ALIGNMENT);
 

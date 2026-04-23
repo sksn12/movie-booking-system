@@ -41,7 +41,7 @@ public class MyBookingsPanel extends JPanel {
         back.addActionListener(e -> Main.menu());
         topBar.add(back, BorderLayout.EAST);
 
-        String memberId = AppContext.repo.getLoginMember().getMemberId();
+        String memberId = AppContext.sessionManager.getLoginMember().getMemberId();
         List<BookDTO> all = AppContext.bookService.findByMemberId(memberId);
         LocalDateTime now = LocalDateTime.now();
 

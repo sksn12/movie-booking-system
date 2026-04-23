@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import common.DataRepository;
 import common.FilePath;
+import common.SessionManager;
 import exception.BookCancelException;
 import exception.MovieNotSelectableException;
 import movie.MovieDTO;
@@ -17,10 +18,12 @@ public class BookService {
 
     private BookDAO bookDAO;
     private DataRepository dataRepository;
+    private SessionManager sessionManager;
 
     public BookService() {
         bookDAO = new BookDAO();
         dataRepository = DataRepository.getInstance();
+        sessionManager = SessionManager.getInstance();
     }
 
     public void readBookData() {
@@ -86,7 +89,7 @@ public class BookService {
 
         BookDTO bookDTO = BookDTO.builder()
                 .bookId(bookId)
-                .memberId(dataRepository.getLoginMember().getMemberId())
+                .memberId(sessionManager.getLoginMember().getMemberId())
                 .movieId(movieId)
                 .movieTitle(movie.getTitle())
                 .theaterNo(movie.getTheaterNo())
