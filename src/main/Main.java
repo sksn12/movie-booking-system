@@ -1,43 +1,31 @@
 package main;
 
-import java.util.List;
+import java.util.Arrays;
 
-import book.BookDTO;
-import book.BookService;
+import book.BookDAO;
 import common.DataRepository;
-import exception.LoginFailedException;
-import member.MemberDAO;
-import member.MemberService;
+import member.MemberDTO;
 import movie.MovieDAO;
-import movie.MovieDTO;
+import movie.MovieService;
+import movie.PriceType;
 
 public class Main {
 
-	public static void main(String[] args) {
-		DataRepository dataRepository = DataRepository.getInstance();
-		BookService bookService = new BookService();
-		bookService.readBookData();
-		List<BookDTO> books = bookService.findByMemberId("tst");
-		for (BookDTO book : books) {
-			System.out.println(book);
-		}
-		// MovieDAO movieDAO = new MovieDAO(dataRepository);
-		// movieDAO.readAllMovies();
-		// List<MovieDTO> movies = movieDAO.getMoviesByDate("2026-04-25");
-		// for (MovieDTO movie : movies) {
-		// System.out.println(movie);
-		// }
-		// MemberDAO memberDAO = new MemberDAO();
-		// MemberService memberService = new MemberService(memberDAO, dataRepository);
-		// memberDAO.readMemberData();
+    public static void main(String[] args) {
+        DataRepository dataRepository = DataRepository.getInstance();
+        MovieDAO movieDAO = new MovieDAO();
+        MovieService movieService = new MovieService(movieDAO);
+        movieService.readAllMovies();
 
-		// memberService.login("admin", "admin");
-		// memberService.logout();
+        BookDAO bookDAO = new BookDAO();
+        bookDAO.readBookData();
 
-		// try {
-		// memberService.login("tst", "error");
-		// } catch (LoginFailedException loginFailedException) {
-		// System.out.println(loginFailedException.getMessage());
-		// }
-	}
+        MemberDTO member = MemberDTO.builder()
+                .memberId("tsc")
+                .password("tsc")
+                .build();
+
+        dataRepository.setLoginMember(member);
+        bookDAO.book("20260416_1_01", "2026-04-16", Arrays.asList("A3"), PriceType.MORNING_PRICE);
+    }
 }
