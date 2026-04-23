@@ -1,1 +1,3 @@
 id|password
+admin|admin
+user|user

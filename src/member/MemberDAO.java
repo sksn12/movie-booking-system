@@ -12,7 +12,7 @@ public class MemberDAO {
 	private DataRepository dataRepository;
 
 	public MemberDAO() {
-		this.dataRepository = DataRepository.gRepository();
+		this.dataRepository = DataRepository.getInstance();
 	}
 
 	public void readMemberData() {

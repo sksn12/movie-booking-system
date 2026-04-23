@@ -22,7 +22,7 @@ public class DataRepository {
 	private DataRepository() {
 	}
 
-	public static DataRepository gRepository() {
+	public static DataRepository getInstance() {
 		if (instance == null) {
 			instance = new DataRepository();
 		}
