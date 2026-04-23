@@ -8,32 +8,33 @@ import common.DataRepository;
 
 public class MovieService {
 
-	private MovieDAO movieDAO;
-	private DataRepository dataRepository;
+    private MovieDAO movieDAO;
+    private DataRepository dataRepository;
 
-	public MovieService(MovieDAO movieDAO) {
-		this.movieDAO = movieDAO;
-		this.dataRepository = DataRepository.getInstance();
-	}
+    public MovieService() {
+        this.movieDAO = new MovieDAO();
+        this.dataRepository = DataRepository.getInstance();
+        readAllMovies();
+    }
 
-	public void readAllMovies() {
-		movieDAO.readAllMovies();
-	}
+    private void readAllMovies() {
+        movieDAO.readAllMovies();
+    }
 
-	public List<MovieDTO> getMoviesByDate(String date) {
-		return dataRepository.getMovieMap().get(date);
-	}
+    public List<MovieDTO> getMoviesByDate(String date) {
+        return dataRepository.getMovieMap().get(date);
+    }
 
-	public void readMoviesByWeek() {
-		LocalDate localDate = LocalDate.now();
-		for (int i = 0; i < 7; i++) {
-			String date = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			List<MovieDTO> movies = dataRepository.getMovieMap().get(date);
-			for (MovieDTO movie : movies) {
-				System.out.println(movie);
-			}
-			localDate = localDate.plusDays(1);
-		}
-	}
+    public void readMoviesByWeek() {
+        LocalDate localDate = LocalDate.now();
+        for (int i = 0; i < 7; i++) {
+            String date = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            List<MovieDTO> movies = dataRepository.getMovieMap().get(date);
+            for (MovieDTO movie : movies) {
+                System.out.println(movie);
+            }
+            localDate = localDate.plusDays(1);
+        }
+    }
 
 }

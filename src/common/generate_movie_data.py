@@ -31,16 +31,6 @@ DAYS_BEFORE  = 7   # 오늘 기준 -7일
 DAYS_AFTER   = 10  # 오늘 기준 +10일
 
 # ──────────────────────────────────────────
-# 상영관 정보
-# ──────────────────────────────────────────
-THEATERS = {
-    1: {"name": "1관",   "total_seats": 100},
-    2: {"name": "2관",   "total_seats": 80},
-    3: {"name": "3관",   "total_seats": 80},
-    4: {"name": "4관(4DX)", "total_seats": 50},
-}
-
-# ──────────────────────────────────────────
 # 영화 목록
 # (title, genre, runningTime(분), price)
 # ──────────────────────────────────────────
@@ -112,6 +102,7 @@ def generate_for_date(target_date: date) -> list[str]:
             movie_id = make_movie_id(target_date, theater_no, slot_idx + 1)
             rows.append(build_row(movie_id, movie, theater_no, start_dt, end_dt))
 
+    rows.sort(key=lambda row: row.split(DELIMITER)[1])
     return rows
 
 
