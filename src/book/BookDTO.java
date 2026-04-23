@@ -3,6 +3,11 @@ package book;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class BookDTO {
 
 	private String bookId;
@@ -14,5 +19,6 @@ public class BookDTO {
 	private LocalDateTime screeningTime;
 	private LocalDateTime bookedAt;
 	private int totalPrice;
+	private boolean isCanceled;
 
 }
