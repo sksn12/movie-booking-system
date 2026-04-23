@@ -103,7 +103,7 @@ public class AppContext {
     static PriceType priceType(LocalDateTime t) {
         LocalTime lt = t.toLocalTime();
         if (lt.isBefore(LocalTime.NOON))         return PriceType.MORNING_PRICE;
-        if (lt.isBefore(LocalTime.of(18, 0)))    return PriceType.GENERAL_PRICE;
+        if (lt.isBefore(LocalTime.of(22, 0)))    return PriceType.GENERAL_PRICE;
         return PriceType.NIGHT_PRICE;
     }
 
